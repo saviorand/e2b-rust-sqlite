@@ -1,4 +1,3 @@
-```rust
 use rocket::http::Status;
 use rocket::request::Request;
 use rocket::response::{self, Responder, Response};
@@ -18,4 +17,3 @@ impl<'r> Responder<'r, 'static> for ErrorHandler {
             .ok()
     }
 }
-```

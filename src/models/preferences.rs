@@ -1,4 +1,3 @@
-```rust
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -39,4 +38,3 @@ impl Preferences {
             .execute(conn)
     }
 }
-```

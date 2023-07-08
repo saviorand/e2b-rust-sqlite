@@ -1,4 +1,3 @@
-```rust
 use rocket_contrib::json::Json;
 use crate::controllers::recipe_controller::RecipeController;
 use crate::models::recipe::Recipe;
@@ -24,4 +23,3 @@ pub fn update_recipe(conn: DbConn, id: i32, recipe: Json<Recipe>) -> Result<Json
 pub fn delete_recipe(conn: DbConn, id: i32) -> Result<Json<String>, CustomError> {
     RecipeController::delete_recipe(&conn, id)
 }
-```

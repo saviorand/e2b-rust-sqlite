@@ -1,7 +1,7 @@
-```rust
 use crate::models::preferences::Preferences;
 use crate::utils::db_connector::DbConn;
 use diesel::prelude::*;
+use std::process::id;
 
 pub struct PreferencesService;
 
@@ -16,4 +16,3 @@ impl PreferencesService {
         diesel::update(preferences.filter(id.eq(user_id))).set(new_preferences).get_result(conn)
     }
 }
-```

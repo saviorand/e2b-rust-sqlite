@@ -1,4 +1,3 @@
-```rust
 use rocket_contrib::json::Json;
 use crate::controllers::preferences_controller::PreferencesController;
 use crate::models::preferences::Preferences;
@@ -24,4 +23,3 @@ pub fn update(conn: DbConn, id: i32, preferences: Json<Preferences>) -> Result<J
 pub fn delete(conn: DbConn, id: i32) -> Result<Json<String>, CustomError> {
     PreferencesController::delete(conn, id)
 }
-```

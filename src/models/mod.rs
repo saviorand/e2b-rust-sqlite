@@ -1,4 +1,3 @@
-```rust
 pub mod user;
 pub mod preferences;
 pub mod recipe;
@@ -9,4 +8,3 @@ use crate::utils::db_connector::DbConn;
 pub fn establish_connection() -> DbConn {
     DbConn::establish_connection()
 }
-```

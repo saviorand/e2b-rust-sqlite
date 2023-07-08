@@ -1,4 +1,3 @@
-```rust
 use rocket_contrib::templates::Template;
 use rocket::Request;
 use crate::controllers::home_controller::HomeController;
@@ -16,4 +15,3 @@ pub fn not_found(req: &Request) -> String {
 pub fn routes() -> Vec<rocket::Route> {
     routes![index, not_found]
 }
-```

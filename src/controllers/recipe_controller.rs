@@ -1,4 +1,3 @@
-```rust
 use rocket_contrib::json::Json;
 use crate::services::recipe_service::RecipeService;
 use crate::models::recipe::Recipe;
@@ -10,4 +9,3 @@ pub fn get_recipe(conn: DbConn, preferences: Json<Preferences>) -> Json<Recipe> 
     let recipe_service = RecipeService::new(conn);
     Json(recipe_service.get_recipe(preferences.into_inner()))
 }
-```

@@ -1,6 +1,6 @@
-```rust
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
+use std::process::id;
 
 use crate::utils::db_connector::DbConn;
 
@@ -35,4 +35,3 @@ impl User {
         diesel::delete(users.find(id)).execute(conn).is_ok()
     }
 }
-```

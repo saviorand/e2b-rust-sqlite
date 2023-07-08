@@ -1,4 +1,3 @@
-```rust
 mod home;
 mod preferences;
 mod recipe;
@@ -6,9 +5,8 @@ mod recipe;
 pub fn routes() -> Vec<rocket::Route> {
     routes![
         home::index,
-        preferences::get_preferences,
-        preferences::post_preferences,
+        preferences::read,
+        preferences::create,
         recipe::get_recipe
     ]
 }
-```

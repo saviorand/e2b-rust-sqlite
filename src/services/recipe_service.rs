@@ -1,8 +1,8 @@
-```rust
 use diesel::prelude::*;
 use crate::models::recipe::Recipe;
 use crate::models::preferences::Preferences;
 use crate::utils::db_connector::DbConn;
+use std::process::id;
 
 pub struct RecipeService;
 
@@ -23,4 +23,3 @@ impl RecipeService {
         query.order(id.desc()).first(conn)
     }
 }
-```
