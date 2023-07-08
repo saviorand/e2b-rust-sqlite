@@ -1,0 +1,8 @@
+CREATE TABLE preferences (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    preference_type VARCHAR NOT NULL,
+    preference_value VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

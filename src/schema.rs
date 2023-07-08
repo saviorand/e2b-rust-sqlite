@@ -1,2 +1,3 @@
-// @generated automatically by Diesel CLI.
-
+```rust
+infer_schema!("dotenv:DATABASE_URL");
+```

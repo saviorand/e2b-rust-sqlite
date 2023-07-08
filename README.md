@@ -6,13 +6,14 @@ This is a full-stack application built with Rust. The user can provide their pre
 
 - Rust 1.54.0 or later
 - Diesel CLI for database migrations
+- PostgreSQL
 
 ## Setup
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/user/milkshake-recipe-generator.git
+git clone https://github.com/username/milkshake-recipe-generator.git
 cd milkshake-recipe-generator
 ```
 
@@ -25,16 +26,17 @@ cargo install diesel_cli --no-default-features --features postgres
 3. Setup the database:
 
 ```bash
+echo DATABASE_URL=postgres://username:password@localhost/milkshake_recipe_generator > .env
 diesel setup
 ```
 
-4. Run database migrations:
+4. Run the migrations:
 
 ```bash
 diesel migration run
 ```
 
-## Running the Application
+## Running the App
 
 1. Build the application:
 
@@ -48,28 +50,20 @@ cargo build
 cargo run
 ```
 
-The application will start and listen on `localhost:8000`.
+The application will start on `localhost:8000`.
 
-## Testing the Application
+## Testing
 
-1. Build the tests:
+To run the tests:
 
 ```bash
 cargo test
 ```
 
-2. Run the tests:
+## Contributing
 
-```bash
-cargo test -- --test-threads=1
-```
-
-## API Endpoints
-
-- `GET /`: Home page
-- `POST /preferences`: Submit user preferences
-- `GET /recipe`: Get personalized milkshake recipe based on user preferences
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-This project is licensed under the MIT License.
+[MIT](https://choosealicense.com/licenses/mit/)

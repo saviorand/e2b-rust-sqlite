@@ -1,25 +1,41 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+```rust
+#[macro_use]
+extern crate diesel;
+extern crate dotenv;
 
-#[macro_use] extern crate rocket;
-#[macro_use] extern crate diesel;
-extern crate rocket_contrib;
-extern crate serde;
-extern crate serde_json;
+use rocket::ignite;
+use rocket::response::Redirect;
+use rocket_contrib::serve::StaticFiles;
+use rocket_contrib::templates::Template;
 
-mod routes;
+mod db;
+mod handlers;
 mod models;
-mod controllers;
-mod services;
+mod routes;
+mod schema;
 mod utils;
 
-use routes::{home, preferences, recipe};
-use rocket_contrib::serve::StaticFiles;
-use utils::db_connector::DbConn;
+use crate::db::establish_connection;
+use crate::routes::*;
 
 fn main() {
-    rocket::ignite()
-        .mount("/", routes![home::index, preferences::get, preferences::post, recipe::get])
-        .mount("/public", StaticFiles::from("static"))
-        .attach(DbConn::fairing())
+    let connection = establish_connection();
+
+    ignite()
+        .manage(connection)
+        .mount(
+            "/",
+            routes![
+                index,
+                preferences,
+                get_preferences,
+                submit_preferences,
+                recipe,
+                get_recipe
+            ],
+        )
+        .mount("/static", StaticFiles::from("static"))
+        .attach(Template::fairing())
         .launch();
 }
+```
