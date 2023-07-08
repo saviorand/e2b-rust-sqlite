@@ -1,54 +1,75 @@
 # Milkshake Recipe Generator
 
-This is a full-stack application built with Rust. Users can provide their preferences and get a personalized recipe of a milkshake.
+This is a full-stack application built with Rust. The user can provide their preferences and get a personalized recipe of a milkshake.
 
 ## Prerequisites
 
 - Rust 1.54.0 or later
-- Cargo 1.54.0 or later
+- Diesel CLI for database migrations
 
-## Installation
+## Setup
 
-Clone the repository:
+1. Clone the repository:
 
-```
+```bash
 git clone https://github.com/user/milkshake-recipe-generator.git
 cd milkshake-recipe-generator
 ```
 
-Build the project:
+2. Install Diesel CLI with PostgreSQL features:
 
+```bash
+cargo install diesel_cli --no-default-features --features postgres
 ```
-cargo build
+
+3. Setup the database:
+
+```bash
+diesel setup
+```
+
+4. Run database migrations:
+
+```bash
+diesel migration run
 ```
 
 ## Running the Application
 
-To run the application:
+1. Build the application:
 
+```bash
+cargo build
 ```
+
+2. Run the application:
+
+```bash
 cargo run
 ```
 
-The application will start and listen on `http://localhost:8000`.
+The application will start and listen on `localhost:8000`.
 
-## Usage
+## Testing the Application
 
-- To set your preferences, make a POST request to `http://localhost:8000/preferences` with your preferences in the request body.
-- To get a personalized milkshake recipe based on your preferences, make a GET request to `http://localhost:8000/recipe`.
+1. Build the tests:
 
-## Testing
-
-To run the tests:
-
-```
+```bash
 cargo test
 ```
 
-## Contributing
+2. Run the tests:
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+```bash
+cargo test -- --test-threads=1
+```
+
+## API Endpoints
+
+- `GET /`: Home page
+- `POST /preferences`: Submit user preferences
+- `GET /recipe`: Get personalized milkshake recipe based on user preferences
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the MIT License.

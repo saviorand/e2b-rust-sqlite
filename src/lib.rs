@@ -1,18 +1,19 @@
-```rust
+pub mod routes;
+pub mod models;
+pub mod controllers;
+pub mod services;
+pub mod utils;
+
 #[macro_use]
 extern crate rocket;
 
-mod routes;
-mod models;
-mod controllers;
-mod services;
-mod utils;
+#[macro_use]
+extern crate diesel;
 
-use routes::{home, preferences, recipe};
+extern crate serde;
 
-pub fn rocket() -> rocket::Rocket {
-    rocket::ignite()
-        .mount("/", routes![home::index, preferences::get, preferences::post, recipe::get])
-        .attach(utils::db_connector::stage())
-}
-```
+pub use self::routes::*;
+pub use self::models::*;
+pub use self::controllers::*;
+pub use self::services::*;
+pub use self::utils::*;

@@ -1,10 +1,19 @@
-use actix_web::{get, web, HttpResponse, Responder};
+```rust
+use rocket_contrib::templates::Template;
+use rocket::Request;
+use crate::controllers::home_controller::HomeController;
 
 #[get("/")]
-async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Welcome to the Milkshake Recipe Generator!")
+pub fn index() -> Template {
+    HomeController::index()
 }
 
-pub fn init(cfg: &mut web::ServiceConfig) {
-    cfg.service(index);
+#[catch(404)]
+pub fn not_found(req: &Request) -> String {
+    HomeController::not_found(req)
 }
+
+pub fn routes() -> Vec<rocket::Route> {
+    routes![index, not_found]
+}
+```

@@ -1,23 +1,26 @@
 ```rust
+use diesel::prelude::*;
 use crate::models::recipe::Recipe;
 use crate::models::preferences::Preferences;
-use crate::utils::db_connector::establish_connection;
+use crate::utils::db_connector::DbConn;
 
 pub struct RecipeService;
 
 impl RecipeService {
-    pub fn get_recipe_based_on_preferences(preferences: Preferences) -> Recipe {
-        let connection = establish_connection();
-        let recipe_query = format!(
-            "SELECT * FROM recipes WHERE flavor = '{}' AND sweetness = '{}' AND creaminess = '{}'",
-            preferences.flavor, preferences.sweetness, preferences.creaminess
-        );
+    pub fn get_recipe(conn: &DbConn, preferences: Preferences) -> QueryResult<Recipe> {
+        use crate::schema::recipes::dsl::*;
 
-        let recipe: Recipe = diesel::sql_query(recipe_query)
-            .get_result(&connection)
-            .expect("Error loading recipe");
+        let mut query = recipes.into_boxed();
 
-        recipe
+        if let Some(flavor) = preferences.flavor {
+            query = query.filter(flavor.eq(flavor));
+        }
+
+        if let Some(sweetness) = preferences.sweetness {
+            query = query.filter(sweetness.eq(sweetness));
+        }
+
+        query.order(id.desc()).first(conn)
     }
 }
 ```

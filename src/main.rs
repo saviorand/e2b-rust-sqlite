@@ -1,26 +1,27 @@
 ```rust
-use actix_web::{web, App, HttpServer};
-use std::io;
+#![feature(proc_macro_hygiene, decl_macro)]
+
+#[macro_use] extern crate rocket;
+#[macro_use] extern crate diesel;
+extern crate rocket_contrib;
+extern crate serde;
+extern crate serde_json;
 
 mod routes;
+mod models;
 mod controllers;
 mod services;
-mod models;
 mod utils;
 
-#[actix_rt::main]
-async fn main() -> io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(
-                web::scope("/")
-                    .configure(routes::home::config)
-                    .configure(routes::preferences::config)
-                    .configure(routes::recipe::config)
-            )
-    })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
+use routes::{home, preferences, recipe};
+use rocket_contrib::serve::StaticFiles;
+use utils::db_connector::DbConn;
+
+fn main() {
+    rocket::ignite()
+        .mount("/", routes![home::index, preferences::get, preferences::post, recipe::get])
+        .mount("/public", StaticFiles::from("static"))
+        .attach(DbConn::fairing())
+        .launch();
 }
 ```

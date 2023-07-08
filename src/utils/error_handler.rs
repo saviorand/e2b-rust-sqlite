@@ -1,23 +1,21 @@
 ```rust
-use actix_web::{HttpResponse, ResponseError};
-use thiserror::Error;
+use rocket::http::Status;
+use rocket::request::Request;
+use rocket::response::{self, Responder, Response};
+use std::io::Cursor;
 
-#[derive(Debug, Error)]
-pub enum AppError {
-    #[error("Invalid user input: {0}")]
-    InvalidInput(String),
-    #[error("Internal Server Error")]
-    InternalServerError,
+pub struct ErrorHandler {
+    pub status: Status,
+    pub message: String,
 }
 
-impl ResponseError for AppError {
-    fn error_response(&self) -> HttpResponse {
-        match *self {
-            AppError::InvalidInput(ref message) => HttpResponse::BadRequest().json(message),
-            AppError::InternalServerError => {
-                HttpResponse::InternalServerError().json("Internal Server Error, Please try again")
-            }
-        }
+impl<'r> Responder<'r, 'static> for ErrorHandler {
+    fn respond_to(self, _: &'r Request<'_>) -> response::Result<'static> {
+        Response::build()
+            .status(self.status)
+            .header(rocket::http::ContentType::Plain)
+            .sized_body(self.message.len(), Cursor::new(self.message))
+            .ok()
     }
 }
 ```

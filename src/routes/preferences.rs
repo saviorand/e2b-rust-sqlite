@@ -1,32 +1,27 @@
-use actix_web::{web, HttpResponse, Responder};
-use serde::Deserialize;
+```rust
+use rocket_contrib::json::Json;
+use crate::controllers::preferences_controller::PreferencesController;
+use crate::models::preferences::Preferences;
+use crate::utils::db_connector::DbConn;
+use crate::utils::error_handler::CustomError;
 
-use crate::controllers::preferences_controller;
-
-#[derive(Deserialize)]
-pub struct Preferences {
-    pub flavor: String,
-    pub sweetness: String,
-    pub toppings: Vec<String>,
+#[post("/preferences", format = "application/json", data = "<preferences>")]
+pub fn create(conn: DbConn, preferences: Json<Preferences>) -> Result<Json<Preferences>, CustomError> {
+    PreferencesController::create(conn, preferences.into_inner())
 }
 
-pub async fn get_preferences() -> impl Responder {
-    let preferences = preferences_controller::get_preferences().await;
-    HttpResponse::Ok().json(preferences)
+#[get("/preferences")]
+pub fn read(conn: DbConn) -> Result<Json<Vec<Preferences>>, CustomError> {
+    PreferencesController::read(conn)
 }
 
-pub async fn set_preferences(preferences: web::Json<Preferences>) -> impl Responder {
-    let result = preferences_controller::set_preferences(preferences.into_inner()).await;
-    match result {
-        Ok(_) => HttpResponse::Ok().body("Preferences updated successfully"),
-        Err(_) => HttpResponse::InternalServerError().body("Error updating preferences"),
-    }
+#[put("/preferences/<id>", format = "application/json", data = "<preferences>")]
+pub fn update(conn: DbConn, id: i32, preferences: Json<Preferences>) -> Result<Json<Preferences>, CustomError> {
+    PreferencesController::update(conn, id, preferences.into_inner())
 }
 
-pub fn config(cfg: &mut web::ServiceConfig) {
-    cfg.service(
-        web::resource("/preferences")
-            .route(web::get().to(get_preferences))
-            .route(web::post().to(set_preferences)),
-    );
+#[delete("/preferences/<id>")]
+pub fn delete(conn: DbConn, id: i32) -> Result<Json<String>, CustomError> {
+    PreferencesController::delete(conn, id)
 }
+```

@@ -1,21 +1,31 @@
 ```rust
+use rocket_contrib::json::Json;
 use crate::models::preferences::Preferences;
 use crate::services::preferences_service::PreferencesService;
-use actix_web::{web, HttpResponse, Responder};
+use crate::utils::db_connector::DbConn;
+use crate::utils::error_handler::CustomError;
 
-pub async fn get_preferences() -> impl Responder {
-    let preferences = PreferencesService::get_preferences().await;
-    match preferences {
-        Ok(data) => HttpResponse::Ok().json(data),
-        Err(_) => HttpResponse::InternalServerError().finish(),
-    }
+#[post("/", format = "application/json", data = "<preferences>")]
+pub fn create(conn: DbConn, preferences: Json<Preferences>) -> Result<Json<Preferences>, CustomError> {
+    PreferencesService::create(&conn, preferences.into_inner())
+        .map(|preferences| Json(preferences))
 }
 
-pub async fn update_preferences(preferences: web::Json<Preferences>) -> impl Responder {
-    let result = PreferencesService::update_preferences(preferences.into_inner()).await;
-    match result {
-        Ok(_) => HttpResponse::Ok().finish(),
-        Err(_) => HttpResponse::InternalServerError().finish(),
-    }
+#[get("/<id>", format = "application/json")]
+pub fn read(conn: DbConn, id: i32) -> Result<Json<Preferences>, CustomError> {
+    PreferencesService::read(&conn, id)
+        .map(|preferences| Json(preferences))
+}
+
+#[put("/<id>", format = "application/json", data = "<preferences>")]
+pub fn update(conn: DbConn, id: i32, preferences: Json<Preferences>) -> Result<Json<Preferences>, CustomError> {
+    PreferencesService::update(&conn, id, preferences.into_inner())
+        .map(|preferences| Json(preferences))
+}
+
+#[delete("/<id>", format = "application/json")]
+pub fn delete(conn: DbConn, id: i32) -> Result<Json<String>, CustomError> {
+    PreferencesService::delete(&conn, id)
+        .map(|message| Json(message))
 }
 ```
