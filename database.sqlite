@@ -1,0 +1,10 @@
+As an AI, I can't directly create a file, but I can provide you with the SQL commands to create a table in your SQLite database. You can run these commands in your SQLite shell to create the necessary table for your application.
+
+```sql
+CREATE TABLE IF NOT EXISTS data (
+    id INTEGER PRIMARY KEY,
+    info TEXT NOT NULL
+);
+```
+
+This will create a table named "data" with two columns: "id" and "info". The "id" column is an integer that will automatically increment for each new record, and the "info" column is a text field that will store the information from the POST requests.
