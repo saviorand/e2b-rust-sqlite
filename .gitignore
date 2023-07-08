@@ -1,0 +1,8 @@
+# .gitignore
+
+/target
+**/*.rs.bk
+.env
+Cargo.lock
+.DS_Store
+*.log
