@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#preferencesForm {
+    margin: 20px 0;
+}
+
+#preferencesForm label {
+    display: block;
+    margin: 5px 0;
+}
+
+#preferencesForm input[type="text"],
+#preferencesForm select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+#preferencesForm button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+#preferencesForm button:hover {
+    background-color: #444;
+}
+
+#cocktailDisplay {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+#cocktailDisplay h2 {
+    margin: 0 0 10px 0;
+}
+
+#cocktailDisplay p {
+    margin: 0 0 10px 0;
+}
